@@ -4,7 +4,8 @@ FlatBuffers is an efficient cross platform serialization library for C++,
 with support for Java, C# and Go. It was created at Google specifically for game
 development and other performance-critical applications.
 
-It is available as open source under the Apache license, v2 (see LICENSE.txt).
+It is available as Open Source on [GitHub](http://github.com/google/flatbuffers)
+under the Apache license, v2 (see LICENSE.txt).
 
 ## Why use FlatBuffers?
 
@@ -114,6 +115,7 @@ sections provide a more in-depth usage guide.
     programs.
 -   How to [use the generated Go code](md__go_usage.html) in your own
     programs.
+-   [Support matrix](md__support.html) for platforms/languages/features.
 -   Some [benchmarks](md__benchmarks.html) showing the advantage of using
     FlatBuffers.
 -   A [white paper](md__white_paper.html) explaining the "why" of FlatBuffers.
@@ -122,7 +124,7 @@ sections provide a more in-depth usage guide.
 
 ## Online resources
 
--   [github repository](http://github.com/google/flatbuffers)
--   [landing page](http://google.github.io/flatbuffers)
+-   [GitHub repository](http://github.com/google/flatbuffers)
+-   [Landing page](http://google.github.io/flatbuffers)
 -   [FlatBuffers Google Group](http://group.google.com/group/flatbuffers)
 -   [FlatBuffers Issues Tracker](http://github.com/google/flatbuffers/issues)

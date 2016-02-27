@@ -49,17 +49,24 @@ endif
 # The following block generates build rules which result in headers being
 # rebuilt from flatbuffers schemas.
 
+FLATBUFFERS_CMAKELISTS_DIR := \
+  $(realpath $(dir $(lastword $(MAKEFILE_LIST)))/../..)
+
 # Directory that contains the FlatBuffers compiler.
-FLATBUFFERS_FLATC_PATH?=$(CURDIR)/bin
 ifeq (Windows,$(PROJECT_OS))
+FLATBUFFERS_FLATC_PATH?=$(CURDIR)/bin
 FLATBUFFERS_FLATC := $(FLATBUFFERS_FLATC_PATH)/Debug/flatc.exe
 endif
 ifeq (Linux,$(PROJECT_OS))
+FLATBUFFERS_FLATC_PATH?=$(CURDIR)/bin
 FLATBUFFERS_FLATC := $(FLATBUFFERS_FLATC_PATH)/flatc
 endif
 ifeq (Darwin,$(PROJECT_OS))
+FLATBUFFERS_FLATC_PATH?=$(FLATBUFFERS_CMAKELISTS_DIR)
 FLATBUFFERS_FLATC := $(FLATBUFFERS_FLATC_PATH)/Debug/flatc
 endif
+
+FLATBUFFERS_FLATC_ARGS?=
 
 # Search for cmake.
 CMAKE_ROOT := $(realpath $(LOCAL_PATH)/../../../../../../prebuilts/cmake)
@@ -80,8 +87,6 @@ CMAKE := cmake
 endif
 
 # Generate a host build rule for the flatbuffers compiler.
-FLATBUFFERS_CMAKELISTS_DIR := \
-  $(realpath $(dir $(lastword $(MAKEFILE_LIST)))/../..)
 ifeq (Windows,$(PROJECT_OS))
 define build_flatc_recipe
 	cd  & jni\build_flatc.bat $(CMAKE)
@@ -146,7 +151,7 @@ $(eval \
   $(call flatbuffers_fbs_to_h,$(2),$(3),$(1)): $(1) $(flatc_target)
 	$(call host-echo-build-step,generic,Generate) \
 		$(subst $(LOCAL_PATH)/,,$(call flatbuffers_fbs_to_h,$(2),$(3),$(1)))
-	$(hide) $$(FLATBUFFERS_FLATC) --gen-includes \
+	$(hide) $$(FLATBUFFERS_FLATC) $(FLATBUFFERS_FLATC_ARGS) \
 	  $(foreach include,$(4),-I $(include)) -o $$(dir $$@) -c $$<)
 endef
 
